@@ -16,8 +16,8 @@ PATH_TO_DATA = './data'
 MODULES = [
     'https://tfhub.dev/google/universal-sentence-encoder-large/3',
     'https://tfhub.dev/google/Wiki-words-500/1',
-    #'https://tfhub.dev/google/nnlm-en-dim128/1',
-    #'https://tfhub.dev/google/elmo/2',
+    'https://tfhub.dev/google/nnlm-en-dim128/1',
+    'https://tfhub.dev/google/elmo/2',
 ]
 
 
