@@ -5,6 +5,7 @@ import os
 import logging
 import tensorflow as tf
 import tensorflow_hub as hub
+import json
 tf.logging.set_verbosity(tf.logging.INFO)
 
 
@@ -56,16 +57,20 @@ logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.INFO)
 
 if __name__ == "__main__":
   # Set up logger
+  total_results = dict()
   for mdl in MODULES:
     print("*-----------------------------------------------------------------*")
     print("Evaluating module: " + mdl)
     print("*-----------------------------------------------------------------*")
 
-    module = make_embed_fn(mdl)
+    module = make_embed_fn(tf.compat.as_str(mdl))
     params_senteval['module'] = module
 
     se = senteval.engine.SE(params_senteval, batcher, prepare)
 
     transfer_tasks = ['STS15', 'STS16', 'MR', 'CR', 'SUBJ']
     results = se.eval(transfer_tasks)
+    total_results[tf.compat.as_str(mdl)] = results
     print(results)
+  with open("/tmp/output.json", "w") as f:
+    json.dump(total_results, f)
